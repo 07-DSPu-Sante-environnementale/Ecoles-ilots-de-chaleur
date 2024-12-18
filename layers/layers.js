@@ -3,12 +3,12 @@ var wms_layers = [];
 
         var lyr_GoogleSatellite_0 = new ol.layer.Tile({
             'title': 'Google Satellite',
-            //'type': 'base',
+            'type':'base',
             'opacity': 1.000000,
             
             
             source: new ol.source.XYZ({
-    attributions: ' ',
+            attributions: ' ',
                 url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
             })
         });
@@ -23,7 +23,7 @@ var lyr_lotsdechaleur_1 = new ol.layer.Vector({
                 declutter: false,
                 source:jsonSource_lotsdechaleur_1, 
                 style: style_lotsdechaleur_1,
-                popuplayertitle: "Îlots de chaleur",
+                popuplayertitle: 'Îlots de chaleur',
                 interactive: false,
     title: 'Îlots de chaleur<br />\
     <img src="styles/legend/lotsdechaleur_1_0.png" /> Chaud<br />\
@@ -40,7 +40,7 @@ var lyr_Rseaulocaldesant_2 = new ol.layer.Vector({
                 declutter: false,
                 source:jsonSource_Rseaulocaldesant_2, 
                 style: style_Rseaulocaldesant_2,
-                popuplayertitle: "Réseau local de santé",
+                popuplayertitle: 'Réseau local de santé',
                 interactive: false,
                 title: '<img src="styles/legend/Rseaulocaldesant_2.png" /> Réseau local de santé'
             });
@@ -55,7 +55,7 @@ var lyr_colespubliques_3 = new ol.layer.Vector({
                 declutter: false,
                 source:jsonSource_colespubliques_3, 
                 style: style_colespubliques_3,
-                popuplayertitle: "Écoles publiques",
+                popuplayertitle: 'Écoles publiques',
                 interactive: true,
     title: 'Écoles publiques<br />\
     <img src="styles/legend/colespubliques_3_0.png" /> Éducation aux adultes<br />\

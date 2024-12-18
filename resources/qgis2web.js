@@ -9,7 +9,7 @@ var map = new ol.Map({
 });
 
 //initial view - epsg:3857 coordinates if not "Match project CRS"
-map.getView().fit([-8467499.975036, 5667257.833813, -8378759.918211, 5728772.443591], map.getSize());
+map.getView().fit([-8446096.748884, 5686171.717011, -8430128.715993, 5698869.517802], map.getSize());
 
 ////small screen definition
     var hasTouchScreen = map.getViewport().classList.contains('ol-touch');
@@ -169,12 +169,11 @@ function onPointerMove(evt) {
     }
     var pixel = map.getEventPixel(evt.originalEvent);
     var coord = evt.coordinate;
-    var popupField;
     var currentFeature;
     var currentLayer;
     var currentFeatureKeys;
     var clusteredFeatures;
-    var clusterLenght;
+    var clusterLength;
     var popupText = '<ul>';
     map.forEachFeatureAtPixel(pixel, function(feature, layer) {
         if (layer && feature instanceof ol.Feature && (layer.get("interactive") || layer.get("interactive") == undefined)) {
@@ -188,9 +187,8 @@ function onPointerMove(evt) {
             currentLayer = layer;
             clusteredFeatures = feature.get("features");
             if (clusteredFeatures) {
-				clusterLenght = clusteredFeatures.length;
+				clusterLength = clusteredFeatures.length;
 			}
-            var clusterFeature;
             if (typeof clusteredFeatures !== "undefined") {
                 if (doPopup) {
                     for(var n=0; n<clusteredFeatures.length; n++) {
@@ -239,7 +237,7 @@ function onPointerMove(evt) {
 					if (typeof clusteredFeatures == "undefined") {
 						radius = featureStyle.getImage().getRadius();
 					} else {
-						radius = parseFloat(featureStyle.split('radius')[1].split(' ')[1]) + clusterLenght;
+						radius = parseFloat(featureStyle.split('radius')[1].split(' ')[1]) + clusterLength;
 					}
 
                     highlightStyle = new ol.style.Style({
@@ -314,7 +312,6 @@ function onSingleClickFeatures(evt) {
     }
     var pixel = map.getEventPixel(evt.originalEvent);
     var coord = evt.coordinate;
-    var popupField;
     var currentFeature;
     var currentFeatureKeys;
     var clusteredFeatures;
@@ -489,7 +486,7 @@ map.addControl(bottomAttribution);
 
 var attributionList = document.createElement('li');
 attributionList.innerHTML = `
-	<a href="https://github.com/tomchadwin/qgis2web">qgis2web</a> &middot;
+	<a href="https://github.com/qgis2web/qgis2web">qgis2web</a> &middot;
 	<a href="https://openlayers.org/">OpenLayers</a> &middot;
 	<a href="https://qgis.org/">QGIS</a>	
 `;
@@ -497,18 +494,20 @@ bottomAttribution.element.appendChild(attributionList);
 
 
 // Disable "popup on hover" or "highlight on hover" if ol-control mouseover
+var preDoHover = doHover;
+var preDoHighlight = doHighlight;
+var isPopupAllActive = false;
 document.addEventListener('DOMContentLoaded', function() {
-    var preDoHover = doHover;
-	var preDoHighlight = doHighlight;
 	if (doHover || doHighlight) {
 		var controlElements = document.getElementsByClassName('ol-control');
 		for (var i = 0; i < controlElements.length; i++) {
-			controlElements[i].addEventListener('mouseover', function() {
-				if (doHover) { doHover = false; }
-				if (doHighlight) { doHighlight = false; }
+			controlElements[i].addEventListener('mouseover', function() { 
+				doHover = false;
+				doHighlight = false;
 			});
 			controlElements[i].addEventListener('mouseout', function() {
 				doHover = preDoHover;
+				if (isPopupAllActive) { return }
 				doHighlight = preDoHighlight;
 			});
 		}

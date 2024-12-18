@@ -6,16 +6,15 @@ var style_Rseaulocaldesant_2 = function(feature, resolution){
         feature: feature,
         variables: {}
     };
-    var value = ""
-    var labelText = "";
-    size = 0;
+    
+    var labelText = ""; var value = feature.get("");
     var labelFont = "19.5px \'Open Sans\', sans-serif";
     var labelFill = "#323232";
     var bufferColor = "#fafafa";
     var bufferWidth = 1.5;
     var textAlign = "left";
-    var offsetX = 8;
-    var offsetY = 3;
+    var offsetX = 0;
+    var offsetY = 0;
     var placement = 'point';
     if (feature.get("RLS_nom") !== null) {
         labelText = String(feature.get("RLS_nom"));
